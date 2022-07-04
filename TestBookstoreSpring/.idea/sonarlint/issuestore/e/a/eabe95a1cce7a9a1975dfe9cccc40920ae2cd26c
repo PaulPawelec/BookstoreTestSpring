@@ -1,0 +1,20 @@
+
+T
+java:S1854"8Remove this useless assignment to local variable "user".(É«ŠW8ÑÿÅŠ™0
+]	java:S125"<This block of commented-out lines of code should be removed.(¾ûå ÿÿÿÿÿ8ÔÿÅŠ™0
+E
+java:S1481")Remove this unused "user" local variable.(É«ŠW8ÖÿÅŠ™0
+V
+java:S1854%"9Remove this useless assignment to local variable "users".(¥ß¤8äïÅŠ™0
+G
+java:S1481%"*Remove this unused "users" local variable.(¥ß¤8úïÅŠ™0
+A
+java:S1168'"+Return an empty collection instead of null.(¥¹ï
+N
+java:S1128"8Remove this unused import 'org.example.model.Authority'.(†ÎÅ’
+Z
+java:S1128"=Remove this unused import 'org.hibernate.HibernateException'.(™òý²8çÙÔŠ™0
+T
+java:S1128"2Remove this unused import 'org.hibernate.Session'.(È¹›§ùÿÿÿÿ8èÙÔŠ™0
+H
+java:S1128"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ

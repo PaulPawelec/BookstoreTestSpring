@@ -1,0 +1,7 @@
+
+}
+java:S1488"bImmediately return this expression instead of assigning it to the temporary variable "categories".(äÓìÆÿÿÿÿÿ
+Z
+java:S1128"=Remove this unused import 'org.hibernate.HibernateException'.(™òı²8Â­Èá™0
+T
+java:S1128"2Remove this unused import 'org.hibernate.Session'.(È¹›§ùÿÿÿÿ8Â­Èá™0

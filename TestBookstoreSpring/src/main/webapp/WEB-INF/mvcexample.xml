@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+    <context:component-scan base-package="org.example" />
+
+    <mvc:annotation-driven />
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <bean id="dataSource"
+          class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/bookstoredb?serverTimezone=Europe/Warsaw"/>
+        <property name="user" value="root"/>
+        <property name="password" value="123456"/>
+
+        <property name="minPoolSize" value="2"/>
+        <property name="maxPoolSize" value="10"/>
+        <property name="maxIdleTime" value="20000"/>
+    </bean>
+
+
+
+    <bean id = "sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="org.example.model" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="myTransactionManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="myTransactionManager"/>
+
+    <sec:global-method-security pre-post-annotations="enabled"/>
+
+    <bean id="bcrypt" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <mvc:view-controller path="/login"/>
+    <mvc:view-controller path="/logout"/>
+
+    <sec:http>
+        <sec:intercept-url pattern="/" access="permitAll()"/>
+        <sec:intercept-url pattern="/register" access="permitAll()"/>
+        <sec:intercept-url pattern="/login" access="isAnonymous()"/>
+        <sec:intercept-url pattern="/logout" access="isAuthenticated()"/>
+
+        <sec:intercept-url pattern="/books/list" access="isAuthenticated()"/>
+        <sec:intercept-url pattern="/authors/list" access="isAuthenticated()"/>
+        <sec:intercept-url pattern="/categories/list" access="isAuthenticated()"/>
+        <sec:intercept-url pattern="/books/bookAdd" access="hasAuthority('ROLE_ADMIN')"/>
+        <sec:intercept-url pattern="/books/saveBook" access="hasAuthority('ROLE_ADMIN')"/>
+
+        <sec:intercept-url pattern="/orders/list" access="isAuthenticated()"/>
+        <sec:intercept-url pattern="/orders/add" access="hasAuthority('ROLE_USER')"/>
+
+        <sec:intercept-url pattern="/cart" access="hasAuthority('ROLE_USER')"/>
+        <sec:intercept-url pattern="/cart/add" access="hasAuthority('ROLE_USER')"/>
+        <sec:intercept-url pattern="/cart/delete" access="hasAuthority('ROLE_USER')"/>
+
+        <sec:intercept-url pattern="/**" access="hasAuthority('ROLE_ADMIN')"/>
+        <sec:form-login login-page="/login"/>
+        <sec:logout logout-success-url="/"/>
+    </sec:http>
+
+    <sec:authentication-manager>
+        <sec:authentication-provider>
+            <sec:password-encoder ref="bcrypt"/>
+            <sec:jdbc-user-service data-source-ref="dataSource"/>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+</beans>

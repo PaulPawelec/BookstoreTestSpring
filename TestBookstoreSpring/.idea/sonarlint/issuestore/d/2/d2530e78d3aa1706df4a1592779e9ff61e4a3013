@@ -1,0 +1,11 @@
+
+r
+java:S1488"]Immediately return this expression instead of assigning it to the temporary variable "books".(ÿÚ¬z
+r
+java:S1488!"]Immediately return this expression instead of assigning it to the temporary variable "books".(ÿÚ¬z
+A
+java:S1168"+Return an empty collection instead of null.(¥¹ï
+S
+java:S1128"=Remove this unused import 'org.hibernate.HibernateException'.(™òı²
+M
+java:S1128"2Remove this unused import 'org.hibernate.Session'.(È¹›§ùÿÿÿÿ
