@@ -1,0 +1,12 @@
+- rejestracja
+- logowanie
+- wylogowanie
+- przegląd listy
+	- książek
+	- autorów
+	- kategorii
+- koszyk zakupów
+- składanie zamówienia przez Usera
+- zmiana statusu zamówienia przez Admina
+- wyświetlanie listy zamówień
+- usuwanie ksiażek przez Admina
